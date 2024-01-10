@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Home.css'
 
 function Home() {
   const navigate = useNavigate();
@@ -9,9 +10,10 @@ function Home() {
   }
 
   return (
-    <div>
-      <h1>智能門窗監控系統</h1>
-      <button onClick={navigateToApiPage}>开始</button>
+    <div className='home-container'>
+      <h1 className='home-title'>智能門窗監控系統</h1>
+      <button className='home-button' onClick={navigateToApiPage}>Start</button>
+      <button type="button" class="btn btn-outline-success" onClick={navigateToApiPage}>Start</button>
     </div>
   );
 }
