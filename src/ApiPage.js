@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Card, Row, Col } from 'react-bootstrap';
 import './ApiPage.css'
+import Button from 'react-bootstrap/Button';
 
 function requestNotificationPermission() {
   Notification.requestPermission().then(permission => {
@@ -25,15 +26,16 @@ function ApiPage() {
           setSensorId(data.sensorId);
 
           const formattedValue = data.value.toFixed(2);
+          if (Math.abs(data.value - formattedValue) > 100 && Notification.permission === "granted") {
+            new Notification("警告", { body: "有人入侵！！位置：窗戶1" });
+          }
           setValue(formattedValue);
 
           const date = new Date(data.timestamp);
           const formattedDate = date.toLocaleString();
           setTimestamp(formattedDate);
 
-          if (data.value > 900 && Notification.permission === "granted") {
-            new Notification("警告", { body: "值超过 1000！" });
-          }
+
         })
         .catch(error => console.error('Error fetching data: ', error));
     };
@@ -83,13 +85,14 @@ function ApiPage() {
   return (
     <>
     <Navbar bg="dark" variant="dark" expand="lg">
+      <div>\t</div>
       <Navbar.Brand href="#">智能門窗監控系統</Navbar.Brand>
+      <Button variant="dark" onClick={requestNotificationPermission} className='notification-button'>notification</Button> 
       <Nav className="mr-auto">
         <Nav.Link href="#features">history</Nav.Link>
         <Nav.Link href="#pricing">help</Nav.Link>
       </Nav>
     </Navbar>
-    <button onClick={requestNotificationPermission}>啟用桌面通知</button>
     <div className='api-container'>
         <Row className='window-sensors'>
           <h3 className='sensorGroup-title'>窗戶</h3>
