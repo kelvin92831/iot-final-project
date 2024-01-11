@@ -15,8 +15,8 @@ function requestNotificationPermission() {
 
 function ApiPage() {
   const [sensorId, setSensorId] = useState('');
-  const [value, setValue] = useState(100.123456);
-  const [timestamp, setTimestamp] = useState(100);
+  const [value, setValue] = useState();
+  const [timestamp, setTimestamp] = useState();
 
   useEffect(() => {
     const fetchData = () => {
@@ -26,8 +26,9 @@ function ApiPage() {
           setSensorId(data.sensorId);
 
           const formattedValue = data.value.toFixed(2);
-          if (Math.abs(value - formattedValue) > 15 && Notification.permission === "granted") {
+          if (Math.abs(value - formattedValue) > 25 && Notification.permission === "granted") {
             new Notification("警告", { body: "有人入侵！！位置：窗戶1" });
+            window.alert('警告！');
           }
           setValue(formattedValue);
 
