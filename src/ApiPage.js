@@ -20,13 +20,13 @@ function ApiPage() {
 
   useEffect(() => {
     const fetchData = () => {
-      fetch('https://smart-campus.kits.tw/api/api/sensors/ACCELERATION/4c315865-4138-48f8-8513-b527f95621ce?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJhY2hlbG9yXzAyIiwidXVpZCI6IjU5ZmJiZWFlLTU0NmEtNGM4My1hNjA1LTNiOTFmZjk0YjdjZiIsIm5hbWUiOiJiYWNoZWxvcl8wMiIsImlhdCI6MTcwNDg3MzE5MiwiZXhwIjoxNzA0OTU5NTkyfQ.QNCH9OpVIv0LuLnVLR9wmjjbmk6T7EomyxoU__Ieazo&Content-Type=application/json')
+      fetch('https://smart-campus.kits.tw/api/api/sensors/ACCELERATION/4c315865-4138-48f8-8513-b527f95621ce?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJhY2hlbG9yXzAyIiwidXVpZCI6IjU5ZmJiZWFlLTU0NmEtNGM4My1hNjA1LTNiOTFmZjk0YjdjZiIsIm5hbWUiOiJiYWNoZWxvcl8wMiIsImlhdCI6MTcwNDk1OTgwMiwiZXhwIjoxNzA1MDQ2MjAyfQ.EiN1h97fwpjU10aD3XiY6FCN3TwsqolA8dyvTmui55M&Content-Type=application/json')
         .then(response => response.json())
         .then(data => {
           setSensorId(data.sensorId);
 
           const formattedValue = data.value.toFixed(2);
-          if (Math.abs(data.value - formattedValue) > 100 && Notification.permission === "granted") {
+          if (Math.abs(value - formattedValue) > 15 && Notification.permission === "granted") {
             new Notification("警告", { body: "有人入侵！！位置：窗戶1" });
           }
           setValue(formattedValue);
@@ -48,7 +48,7 @@ function ApiPage() {
   const renderCard = () => (
     <Card style={{ width: '18rem', marginBottom: '20px' }}>
       <Card.Body>
-        <Card.Title>窗戶1</Card.Title>
+        <Card.Title>前門</Card.Title>
         <Card.Text>
           Sensor ID: {sensorId}<br />
           Value: {value}<br />
@@ -95,17 +95,17 @@ function ApiPage() {
     </Navbar>
     <div className='api-container'>
         <Row className='window-sensors'>
-          <h3 className='sensorGroup-title'>窗戶</h3>
+          <h3 className='sensorGroup-title'>門</h3>
           <Col>{renderCard()}</Col>
-          <Col>{renderCardNone('窗戶2')}</Col>
-          <Col>{renderCardNone('窗戶3')}</Col>
+          <Col>{renderCardNone('後門')}</Col>
+          <Col>{renderCardNone('側門')}</Col>
         </Row>
       
         <Row className='door-sensors'>
-          <h3 className='sensorGroup-title'>門</h3>
-          <Col>{renderCardNone('前門')}</Col>
-          <Col>{renderCardNone('後門')}</Col>
-          <Col>{renderCardNone('側門')}</Col>
+          <h3 className='sensorGroup-title'>窗戶</h3>
+          <Col>{renderCardNone('窗戶1')}</Col>
+          <Col>{renderCardNone('窗戶2')}</Col>
+          <Col>{renderCardNone('窗戶3')}</Col>
         </Row>
       
     </div>
